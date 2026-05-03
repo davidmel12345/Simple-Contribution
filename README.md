@@ -34,4 +34,5 @@ analytical queries and data cubes. While typically full projects are uploaded
 to github, rather than only an individual contribution, this repository is
 meant as an external link to the project report that must be concise. Hence,
 this is why the repository looks very minimal. It is only intended as an
-individual contribution to a larger project.
+attachment to a final group project report, and it is intended to show the
+individual code contribution to a larger project.
