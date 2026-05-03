@@ -18,15 +18,7 @@ order_items and the surrouding context being customers, products, categories, su
 
 For future considerations and for a deeper analysis of a large business, a galaxy schema might be more a more logical option. The extract phase consisted
 of extracting the data from the OLTP tables and placing it into staging tables. The creation of the staging tables is done once only, as well as
-the creation of the dimension tables, unless moving to a more complex
-and production ready system. The transform phase consisted of applying rules
-to transform, sanitize, validate data, say to capitalize names, lowercase
-certain attribute entries, remove leading and trailing whitespaces, and
-checking that no invalid entries are inside. For instance, a negative price
-should never enter our OLAP tables. The load phase consisted of loading
-the transformed data from the staging tables into the fact and dimension
-tables. Proper joins were applied in an attempt to reduce many joins during
-the querying for the analytical queries.
+the creation of the dimension tables. The transform phase consisted of applying rules to transform, sanitize, validate data, say to capitalize names, lowercase certain attribute entries, remove leading and trailing whitespaces, and checking that no invalid entries are inside. For instance, a negative price should never enter our OLAP tables. The load phase consisted of loading the transformed data from the staging tables into the fact and dimension tables. Proper joins were applied in an attempt to reduce many joins during the querying for the analytical queries.
 
 The last phase was done by another teammate, and it relied on creating
 analytical queries and data cubes. While typically full projects are uploaded
