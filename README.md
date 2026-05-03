@@ -80,3 +80,12 @@ However, as I said before, a well designed ETL process is responsible
 for the data integrity part, and you can add the constraints with ENABLE
 NOVALIDATE for metadata and documentation, but that option will not
 validate it because it is too much overhead.
+
+Slowly changing dimension type 2 attributes such as record_hash are 
+added so that we can avoid processing records that have had no updates.
+Essentially, if there was an update to a customer, then there will be
+a change in the overall hash of the record, so a mismatch 
+between hash values would be detected. Additionally, other slowly changing dimensions type 2 attributes such as valid_from, valid_to, and is_current are added because we do not want to override records in OLAP tables but rather track history and to analyze based on changes. Overwriting changes would lose history but would lead to less storage, and this would be a slowly changing dimensions type 1 implementation. I chose slowly changing dimensions type 2 attributes for the dimension tables given the context and the business.
+For an ecommerce website, it is a good idea to keep track of history of
+changes and to not override them in the OLAP tables because overriding loses
+track of those changes and that history. This may lead to more storage used, but it can lead to more powerful conclusions about the behaviors of our customers.
