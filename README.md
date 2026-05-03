@@ -14,8 +14,7 @@ non complex backbone for an ETL process is included in the script.sql file.
 
 The last phase was worked by another teammate, and it includes the analytical 
 part based on the OLAP tables. A Star schema was used as the basis for my work, which contains one fact table obtained from the source table
-order_items and the surrouding context being date (which is not obtained
-from OLTP tables), customers, products, categories, supplier, etc.
+order_items and the surrouding context being customers, products, categories, supplier, date (this last one not being obtained from OLTP tables), etc.
 
 For future considerations and for a deeper analysis of a large business, a galaxy schema might be more a more logical option. The extract phase consisted
 of extracting the data from the OLTP tables and placing it into staging tables. The creation of the staging tables is done once only, as well as
