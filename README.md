@@ -42,14 +42,12 @@ is the integrity enforcement. Now is it good practice? Why would
 someone avoid adding foreign key constraints for the OLAP fact table, all
 of which would reference the corresponding primary key (surrogate key)
 of the dimension tables? The reason for this is that in OLAP, we are typically
-working with many more records than when for OLTP. In OLAP, we are typically
+working with many more records than in or OLTP. In OLAP, we are typically
 dealing with thousands, millions, or even billions of rows, which 
 ultimately means that if we enforce the constraints, the process will be
 significantly slowed down. This is why a well designed ETL process
 is responsible for data integrity. That said, some engineers still add
-the constraints yet disable them when the processes are run (because
-otherwise performance is slowed down); something like that can be done
-in the following way:
+the constraints yet disable them from being checked for the processes that will run (because otherwise performance is slowed down); something like that can be done in the following way:
 
 ALTER TABLE fact_sales
 ADD CONSTRAINT fk_fact_customer
@@ -59,18 +57,7 @@ ENABLE NOVALIDATE;
 
 Note that in the above piece of code, we would still be adding the foreign key
 constraint on fact_sales.customer_key, and it would reference dim_customer.customer_key. However, ENABLE NOVALIDATE allows the system not to check
-that because for OLAP this can slow down operations; remember we are dealing
-with billions of records at times. Why would someone ever add foreign keys
-if they are not even going to be checked then? Well, it appears in user
-constraints, bi tools can see it, and it documents the relationship. So 
-it acts as metadata, and the optimizer can use the metadata. In summary,
-business intelligence tools can automatically detect the relationship, and
-you can get peformance benefit without the cost. It basically allows for
-query planning. That said, it will still not validate the constraint.
-However, as I said before, a well designed ETL process is responsible
-for the data integrity part, and you can add the constraints with ENABLE
-NOVALIDATE for metadata and documentation, but that option will not
-validate it because it is too much overhead.
+the constraint because for OLAP this can slow down operations; remember we are dealing with billions of records at times. Why would someone ever add foreign keys if they are not even going to be checked then? Well, when you add such constraints and enable no validate, bi tools can see the constraints, and it documents the relationship. So it acts as metadata, and the optimizer can use the metadata. In summary, business intelligence tools can automatically detect the relationship, and you can get peformance benefit without the cost. It basically allows for query planning. That said, it will still not validate the constraint. However, as I said before, a well designed ETL process is responsible for the data integrity part, and you can add the constraints with ENABLE NOVALIDATE for metadata and documentation, but that option will not validate it, and we need to do that because it is too much overhead.
 
 Slowly changing dimension type 2 attributes such as record_hash are 
 added so that we can avoid processing records that have had no updates.
@@ -79,4 +66,4 @@ a change in the overall hash of the record, so a mismatch
 between hash values would be detected. Additionally, other slowly changing dimensions type 2 attributes such as valid_from, valid_to, and is_current are added because we do not want to override records in OLAP tables but rather track history and to analyze based on changes. Overwriting changes would lose history but would lead to less storage, and this would be a slowly changing dimensions type 1 implementation. I chose slowly changing dimensions type 2 attributes for the dimension tables given the context and the business.
 For an ecommerce website, it is a good idea to keep track of history of
 changes and to not override them in the OLAP tables because overriding loses
-track of those changes and that history. This may lead to more storage used, but it can lead to more powerful conclusions about the behaviors of our customers.
+track of those changes and the history. This may lead to more storage used, but it can lead to more powerful conclusions about the behaviors of our customers.
