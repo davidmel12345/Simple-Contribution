@@ -142,8 +142,7 @@ FROM (
 );
 
 
-ETL process
-
+-- ETL process
 
 -- Creating the staging tables
 -- We only grab the table with its attributes but
