@@ -20,7 +20,7 @@ from OLTP tables), customers, products, categories, supplier, etc.
 For future considerations and for a deeper analysis of a large business, a galaxy schema might be more a more logical option. The extract phase consisted
 of extracting the data from the OLTP tables and placing it into staging tables. The creation of the staging tables is done once only, as well as
 the creation of the dimension tables, unless moving to a more complex
-and productiono ready system. The transform phase consisted of applying rules
+and production ready system. The transform phase consisted of applying rules
 to transform, sanitize, validate data, say to capitalize names, lowercase
 certain attribute entries, remove leading and trailing whitespaces, and
 checking that no invalid entries are inside. For instance, a negative price
